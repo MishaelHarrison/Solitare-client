@@ -1,19 +1,27 @@
-<div *ngIf="piles" style="display: grid ;grid-template-columns: repeat(7, 1fr);grid-gap: 1%;">
-    <app-card *ngIf="piles.drawDown > 0"></app-card>
-    <app-pile [cards] = "piles.drawUp.slice(-3)"></app-pile>
-    <div></div>
-    <app-card [card] = "piles.win0.length>0?piles.win0.slice(-1)[0]:null"></app-card>
-    <app-card [card] = "piles.win1.length>0?piles.win1.slice(-1)[0]:null"></app-card>
-    <app-card [card] = "piles.win2.length>0?piles.win2.slice(-1)[0]:null"></app-card>
-    <app-card [card] = "piles.win3.length>0?piles.win3.slice(-1)[0]:null"></app-card>
+<div *ngIf="piles" class="gameRow">
+  <app-card *ngIf="piles.drawDown > 0"></app-card>
+  <app-pile [cards]="piles.drawUp.slice(-3)"></app-pile>
+  <div></div>
+  <app-card
+    [card]="piles.win0.length > 0 ? piles.win0.slice(-1)[0] : null"
+  ></app-card>
+  <app-card
+    [card]="piles.win1.length > 0 ? piles.win1.slice(-1)[0] : null"
+  ></app-card>
+  <app-card
+    [card]="piles.win2.length > 0 ? piles.win2.slice(-1)[0] : null"
+  ></app-card>
+  <app-card
+    [card]="piles.win3.length > 0 ? piles.win3.slice(-1)[0] : null"
+  ></app-card>
 </div>
 
-<div *ngIf="piles" style="display: grid ;grid-template-columns: repeat(7, 1fr);grid-gap: 1%;">
-    <app-pile [unknowns] = "piles.faceDown0" [cards] = "piles.faceUp0"></app-pile>
-    <app-pile [unknowns] = "piles.faceDown1" [cards] = "piles.faceUp1"></app-pile>
-    <app-pile [unknowns] = "piles.faceDown2" [cards] = "piles.faceUp2"></app-pile>
-    <app-pile [unknowns] = "piles.faceDown3" [cards] = "piles.faceUp3"></app-pile>
-    <app-pile [unknowns] = "piles.faceDown4" [cards] = "piles.faceUp4"></app-pile>
-    <app-pile [unknowns] = "piles.faceDown5" [cards] = "piles.faceUp5"></app-pile>
-    <app-pile [unknowns] = "piles.faceDown6" [cards] = "piles.faceUp6"></app-pile>
+<div *ngIf="piles" class="gameRow">
+  <app-pile [unknowns]="piles.faceDown0" [cards]="piles.faceUp0"></app-pile>
+  <app-pile [unknowns]="piles.faceDown1" [cards]="piles.faceUp1"></app-pile>
+  <app-pile [unknowns]="piles.faceDown2" [cards]="piles.faceUp2"></app-pile>
+  <app-pile [unknowns]="piles.faceDown3" [cards]="piles.faceUp3"></app-pile>
+  <app-pile [unknowns]="piles.faceDown4" [cards]="piles.faceUp4"></app-pile>
+  <app-pile [unknowns]="piles.faceDown5" [cards]="piles.faceUp5"></app-pile>
+  <app-pile [unknowns]="piles.faceDown6" [cards]="piles.faceUp6"></app-pile>
 </div>

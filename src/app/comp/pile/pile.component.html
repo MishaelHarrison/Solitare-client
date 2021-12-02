@@ -1,4 +1,4 @@
-<div class="container" style="display: grid;grid-auto-rows: 2em;">
-    <app-card *ngFor = "let i of [].constructor(unknowns)"></app-card>
-    <app-card *ngFor = "let card of cards" [card] = "card"></app-card>
+<div class="pile">
+  <app-card *ngFor="let i of [].constructor(unknowns)"></app-card>
+  <app-card *ngFor="let card of cards" [card]="card"></app-card>
 </div>
