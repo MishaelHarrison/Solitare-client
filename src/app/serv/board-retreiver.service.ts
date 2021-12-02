@@ -11,7 +11,7 @@ export class BoardRetreiverService {
   constructor(private http: HttpClient) {}
 
   retrieveFullBoard(id: number): Observable<Board> {
-    return this.http.get<Board>(environment.api + '/1');
+    return this.http.get<Board>(environment.api + '/' + id);
   }
 
   createBoard(): Observable<number> {
