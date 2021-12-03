@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BoardRetreiverService } from './board-retreiver.service';
+import { BoardManagerService } from './board-retreiver.service';
 
 describe('BoardRetreiverService', () => {
-  let service: BoardRetreiverService;
+  let service: BoardManagerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(BoardRetreiverService);
+    service = TestBed.inject(BoardManagerService);
   });
 
   it('should be created', () => {

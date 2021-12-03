@@ -1,27 +1,74 @@
 <div *ngIf="piles" class="gameRow">
-  <app-card *ngIf="piles.drawDown > 0"></app-card>
-  <app-pile [cards]="piles.drawUp.slice(-3)"></app-pile>
+  <app-card
+    [notBlank]="piles.drawDown > 0"
+    (click)="clickDrawDeck()"
+  ></app-card>
+  <app-pile
+    *ngIf="piles.drawUp.length > 0"
+    [cards]="piles.drawUp.slice(-3)"
+    (makeSelection)="catchSelection($event)"
+  ></app-pile>
+  <div *ngIf="piles.drawUp.length == 0"></div>
   <div></div>
   <app-card
+    [notBlank]="piles.win0.length > 0"
     [card]="piles.win0.length > 0 ? piles.win0.slice(-1)[0] : null"
   ></app-card>
   <app-card
+    [notBlank]="piles.win0.length > 0"
     [card]="piles.win1.length > 0 ? piles.win1.slice(-1)[0] : null"
   ></app-card>
   <app-card
+    [notBlank]="piles.win0.length > 0"
     [card]="piles.win2.length > 0 ? piles.win2.slice(-1)[0] : null"
   ></app-card>
   <app-card
+    [notBlank]="piles.win0.length > 0"
     [card]="piles.win3.length > 0 ? piles.win3.slice(-1)[0] : null"
   ></app-card>
 </div>
 
 <div *ngIf="piles" class="gameRow">
-  <app-pile [unknowns]="piles.faceDown0" [cards]="piles.faceUp0"></app-pile>
-  <app-pile [unknowns]="piles.faceDown1" [cards]="piles.faceUp1"></app-pile>
-  <app-pile [unknowns]="piles.faceDown2" [cards]="piles.faceUp2"></app-pile>
-  <app-pile [unknowns]="piles.faceDown3" [cards]="piles.faceUp3"></app-pile>
-  <app-pile [unknowns]="piles.faceDown4" [cards]="piles.faceUp4"></app-pile>
-  <app-pile [unknowns]="piles.faceDown5" [cards]="piles.faceUp5"></app-pile>
-  <app-pile [unknowns]="piles.faceDown6" [cards]="piles.faceUp6"></app-pile>
+  <app-pile
+    [unknowns]="piles.faceDown0"
+    [cards]="piles.faceUp0"
+    (makeSelection)="catchSelection($event)"
+    (flipUnknown)="flipUnknown(0)"
+  ></app-pile>
+  <app-pile
+    [unknowns]="piles.faceDown1"
+    [cards]="piles.faceUp1"
+    (makeSelection)="catchSelection($event)"
+    (flipUnknown)="flipUnknown(1)"
+  ></app-pile>
+  <app-pile
+    [unknowns]="piles.faceDown2"
+    [cards]="piles.faceUp2"
+    (makeSelection)="catchSelection($event)"
+    (flipUnknown)="flipUnknown(2)"
+  ></app-pile>
+  <app-pile
+    [unknowns]="piles.faceDown3"
+    [cards]="piles.faceUp3"
+    (makeSelection)="catchSelection($event)"
+    (flipUnknown)="flipUnknown(3)"
+  ></app-pile>
+  <app-pile
+    [unknowns]="piles.faceDown4"
+    [cards]="piles.faceUp4"
+    (makeSelection)="catchSelection($event)"
+    (flipUnknown)="flipUnknown(4)"
+  ></app-pile>
+  <app-pile
+    [unknowns]="piles.faceDown5"
+    [cards]="piles.faceUp5"
+    (makeSelection)="catchSelection($event)"
+    (flipUnknown)="flipUnknown(5)"
+  ></app-pile>
+  <app-pile
+    [unknowns]="piles.faceDown6"
+    [cards]="piles.faceUp6"
+    (makeSelection)="catchSelection($event)"
+    (flipUnknown)="flipUnknown(6)"
+  ></app-pile>
 </div>
