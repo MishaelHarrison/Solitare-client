@@ -1,4 +1,16 @@
 <div class="pile">
-  <app-card *ngFor="let i of [].constructor(unknowns)"></app-card>
-  <app-card *ngFor="let card of cards" [card]="card"></app-card>
+  <app-card
+    *ngFor="let i of [].constructor(unknowns)"
+    (makeSelection)="SelectUnknown.emit()"
+  ></app-card>
+  <app-card
+    *ngFor="let card of cards"
+    [card]="card"
+    (makeSelection)="catchSelection($event)"
+  ></app-card>
+  <app-card
+    *ngIf="unknowns == 0 && cards.length == 0"
+    [unknownState]="'blank'"
+    (makeSelection)="SelectEmpty.emit()"
+  ></app-card>
 </div>
