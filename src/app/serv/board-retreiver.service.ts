@@ -18,7 +18,6 @@ export class BoardManagerService {
           let v = x.board[k];
           if (typeof v == 'object') {
             for (let i = 0; i < v.length; i++) {
-              v[i].pile = k;
               v[i].depth = v.length - i;
             }
           }
@@ -45,9 +44,14 @@ export class BoardManagerService {
           {},
           { observe: 'response' }
         )
-        .subscribe((x) => {
-          o.next(x.ok);
-        });
+        .subscribe(
+          (x) => {
+            o.next(x.ok);
+          },
+          (error) => {
+            o.next(false);
+          }
+        );
     });
   }
 }

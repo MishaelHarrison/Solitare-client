@@ -8,8 +8,9 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./pile.component.css'],
 })
 export class PileComponent implements OnInit {
-  @Output() makeSelection: EventEmitter<any> = new EventEmitter();
-  @Output() flipUnknown: EventEmitter<any> = new EventEmitter();
+  @Output() SelectKnown: EventEmitter<any> = new EventEmitter();
+  @Output() SelectUnknown: EventEmitter<any> = new EventEmitter();
+  @Output() SelectEmpty: EventEmitter<any> = new EventEmitter();
 
   @Input() unknowns: number = 0;
   @Input() cards: Card[] = [];
@@ -19,6 +20,6 @@ export class PileComponent implements OnInit {
   ngOnInit(): void {}
 
   catchSelection(event: any) {
-    this.makeSelection.emit(event);
+    this.SelectKnown.emit(event);
   }
 }

@@ -1,7 +1,7 @@
 <div class="pile">
   <app-card
     *ngFor="let i of [].constructor(unknowns)"
-    (makeSelection)="flipUnknown.emit()"
+    (makeSelection)="SelectUnknown.emit()"
   ></app-card>
   <app-card
     *ngFor="let card of cards"
@@ -10,6 +10,7 @@
   ></app-card>
   <app-card
     *ngIf="unknowns == 0 && cards.length == 0"
-    [notBlank]="false"
+    [unknownState]="'blank'"
+    (makeSelection)="SelectEmpty.emit()"
   ></app-card>
 </div>

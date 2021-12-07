@@ -3,6 +3,5 @@ export interface Card {
   value: String;
   suit: String;
   code: String;
-  pile?: String;
   depth?: number;
 }

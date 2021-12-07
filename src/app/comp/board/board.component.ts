@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Piles } from 'src/app/Board';
+import { Card } from 'src/app/Card';
 import { BoardManagerService } from 'src/app/serv/board-retreiver.service';
 
 @Component({
@@ -14,6 +15,9 @@ export class BoardComponent implements OnInit {
   pileSelection: string | null = null;
   depthSelection: number | null = null;
 
+  playNums: number[] = [0, 1, 2, 3, 4, 5, 6];
+  winNums: number[] = [0, 1, 2, 3];
+
   constructor(private service: BoardManagerService) {}
 
   ngOnInit(): void {
@@ -23,6 +27,21 @@ export class BoardComponent implements OnInit {
         this.getBoard();
       });
     else this.getBoard();
+  }
+
+  getPile(index: number): Card[] {
+    return this.piles![('faceUp' + index) as keyof Piles] as Card[];
+  }
+
+  getLength(index: number): number {
+    return this.piles![('faceDown' + index) as keyof Piles] as number;
+  }
+
+  getWinPileTop(index: number): Card | null {
+    let pile: Card[] = this.piles![('win' + index) as keyof Piles] as Card[];
+    if (pile) {
+      return pile.slice(-1)[0];
+    } else return null;
   }
 
   getBoard(): void {
@@ -41,13 +60,27 @@ export class BoardComponent implements OnInit {
       });
   }
 
-  catchSelection(event: { pile: string; depth: number }) {
+  catchSelection(event: { depth: number }, pileNum: number) {
     if (this.pileSelection == null || this.depthSelection == null) {
-      this.pileSelection = event.pile;
+      this.pileSelection = 'faceUp' + pileNum;
       this.depthSelection = event.depth;
     } else {
-      this.move(this.pileSelection, event.pile, this.depthSelection);
+      this.move(this.pileSelection, 'faceUp' + pileNum, this.depthSelection);
     }
+  }
+
+  playWinPile(pileNum: number) {
+    if (this.pileSelection == null || this.depthSelection == null) {
+      this.pileSelection = 'win' + pileNum;
+      this.depthSelection = 1;
+    } else {
+      this.move(this.pileSelection, 'win' + pileNum, this.depthSelection);
+    }
+  }
+
+  playDrawPile() {
+    this.pileSelection = 'drawUp';
+    this.depthSelection = 1;
   }
 
   flipUnknown(pileNum: number) {
@@ -57,5 +90,11 @@ export class BoardComponent implements OnInit {
   clickDrawDeck() {
     if (this.piles?.drawDown! > 0) this.move('drawDown', 'drawUp', 1);
     else this.move('drawUp', 'drawDown', 1);
+  }
+
+  selectEmpty(pileNum: number) {
+    if (!(this.pileSelection == null || this.depthSelection == null)) {
+      this.move(this.pileSelection, 'faceUp' + pileNum, this.depthSelection);
+    }
   }
 }
