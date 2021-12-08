@@ -1,3 +1,5 @@
+<button type="button" (click)="id = null; ngOnInit()">reset</button>
+
 <div *ngIf="piles" class="gameRow">
   <app-card *ngIf="piles.drawDown > 0" (click)="clickDrawDeck()"></app-card>
   <app-card
