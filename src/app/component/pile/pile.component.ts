@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { Card } from 'src/app/Card';
+import { Card } from 'src/app/models/Card';
 import { EventEmitter } from '@angular/core';
 
 @Component({

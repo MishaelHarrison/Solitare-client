@@ -7,8 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Card } from 'src/app/Card';
-import { environment } from 'src/environments/environment';
+import { Card, CardDefaults } from 'src/app/models/Card';
 import { EventEmitter } from '@angular/core';
 
 @Component({
@@ -23,7 +22,7 @@ export class CardComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(_changes: SimpleChanges): void {
     this.setCardDefault();
   }
 
@@ -32,7 +31,7 @@ export class CardComponent implements OnInit, OnChanges {
   }
 
   @HostListener('click', ['$event.target'])
-  onClick(target: any) {
+  onClick(_target: any) {
     this.makeSelection.emit({ depth: this.card?.depth });
   }
 
@@ -40,19 +39,7 @@ export class CardComponent implements OnInit, OnChanges {
     this.card =
       this.card ||
       (this.unknownState == 'reverseSide'
-        ? {
-            image: environment.cardReverseSide,
-            value: '',
-            suit: '',
-            code: '',
-            depth: 1,
-          }
-        : {
-            image: environment.noCardImage,
-            value: '',
-            suit: '',
-            code: '',
-            depth: 1,
-          });
+        ? CardDefaults.reverseCard()
+        : CardDefaults.blankCard());
   }
 }

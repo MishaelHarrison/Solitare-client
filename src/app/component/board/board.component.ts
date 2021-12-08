@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Piles } from 'src/app/Board';
-import { Card } from 'src/app/Card';
-import { BoardManagerService } from 'src/app/serv/board-retreiver.service';
+import { Piles } from 'src/app/models/Board';
+import { Card } from 'src/app/models/Card';
+import { BoardManagerService } from 'src/app/service/board-retreiver.service';
 
 @Component({
   selector: 'app-board',
@@ -21,12 +21,10 @@ export class BoardComponent implements OnInit {
   constructor(private service: BoardManagerService) {}
 
   ngOnInit(): void {
-    if (!this.id)
-      this.service.createBoard().subscribe((x) => {
-        this.id = x;
-        this.getBoard();
-      });
-    else this.getBoard();
+    this.service.createBoard(this.id).subscribe((x) => {
+      this.id = x;
+      this.getBoard();
+    });
   }
 
   getPile(index: number): Card[] {
@@ -45,8 +43,15 @@ export class BoardComponent implements OnInit {
   }
 
   getBoard(): void {
-    this.service.retrieveFullBoard(this.id!).subscribe((y) => {
+    this.service.retrieveBoard(this.id!).subscribe((y) => {
       this.piles = y.board;
+    });
+  }
+
+  getPartialBoard(piles: string[]): void {
+    this.service.retrieveBoard(this.id!, piles).subscribe((y) => {
+      if (!this.piles) return;
+      this.piles = { ...this.piles, ...y.board };
     });
   }
 
@@ -54,7 +59,7 @@ export class BoardComponent implements OnInit {
     this.service
       .makeMove(this.id!, from, to, depth)
       .subscribe((success: Boolean) => {
-        if (success) this.getBoard();
+        if (success) this.getPartialBoard([from, to]);
         this.pileSelection = null;
         this.depthSelection = null;
       });
