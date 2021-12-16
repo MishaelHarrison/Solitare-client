@@ -58,7 +58,9 @@ export class BoardComponent implements OnInit, Board {
     this.service
       .makeMove(this.id!, from, to, depth)
       .subscribe((success: Boolean) => {
-        if (success) this.getPartialBoard([from, to]);
+        if (success) {
+          this.getPartialBoard([from, to]);
+        }
         this.pileSelection = null;
         this.depthSelection = null;
       });
@@ -104,9 +106,11 @@ export class BoardComponent implements OnInit, Board {
   }
 
   clickDrawDeck() {
-    if (this.HiddenDrawPile > 0)
+    if (this.HiddenDrawPile > 0) {
       this.move(PileNames.HiddenDrawPile, PileNames.DrawPile, 1);
-    else this.move(PileNames.DrawPile, PileNames.HiddenDrawPile, 1);
+    } else {
+      this.move(PileNames.DrawPile, PileNames.HiddenDrawPile, 1);
+    }
   }
 
   selectEmpty(pileNum: number) {
