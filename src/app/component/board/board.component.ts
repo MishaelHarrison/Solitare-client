@@ -18,10 +18,17 @@ export class BoardComponent implements OnInit, Board {
 
   id: number | null = null;
 
-  pileSelection: string | null = null;
-  depthSelection: number | null = null;
+  private pileSelection: string | null = null;
+  private depthSelection: number | null = null;
 
   constructor(private service: BoardManagerService) {}
+
+  ngOnInit(): void {
+    this.service.createBoard(this.id).subscribe((x) => {
+      this.id = x;
+      this.retrieveBoard();
+    });
+  }
 
   everythingExists(): boolean {
     return this.PlayPiles &&
@@ -33,14 +40,7 @@ export class BoardComponent implements OnInit, Board {
       : false;
   }
 
-  ngOnInit(): void {
-    this.service.createBoard(this.id).subscribe((x) => {
-      this.id = x;
-      this.getBoard();
-    });
-  }
-
-  getBoard(): void {
+  private retrieveBoard(): void {
     this.service.retrieveBoard(this.id!).subscribe((y) => {
       this.PlayPiles = y.PlayPiles;
       this.HiddenPlayPiles = y.HiddenPlayPiles;
@@ -50,16 +50,16 @@ export class BoardComponent implements OnInit, Board {
     });
   }
 
-  getPartialBoard(piles: string[]): void {
+  private retrievePartialBoard(piles: string[]): void {
     this.service.updateBoard(this.id!, piles, this).subscribe();
   }
 
-  move(from: string, to: string, depth: number) {
+  private move(from: string, to: string, depth: number) {
     this.service
       .makeMove(this.id!, from, to, depth)
       .subscribe((success: Boolean) => {
         if (success) {
-          this.getPartialBoard([from, to]);
+          this.retrievePartialBoard([from, to]);
         }
         this.pileSelection = null;
         this.depthSelection = null;

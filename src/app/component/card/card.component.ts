@@ -23,11 +23,11 @@ export class CardComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnChanges(_changes: SimpleChanges): void {
-    this.setCardDefault();
+    this.CardDefault();
   }
 
   ngOnInit(): void {
-    this.setCardDefault();
+    this.CardDefault();
   }
 
   @HostListener('click', ['$event.target'])
@@ -35,7 +35,7 @@ export class CardComponent implements OnInit, OnChanges {
     this.makeSelection.emit({ depth: this.card?.depth });
   }
 
-  setCardDefault(): void {
+  private CardDefault(): void {
     this.card =
       this.card ||
       (this.unknownState == 'reverseSide'
