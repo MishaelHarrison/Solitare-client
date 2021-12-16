@@ -1,32 +1,32 @@
 <button type="button" (click)="id = null; ngOnInit()">reset</button>
 
-<div *ngIf="piles" class="gameRow">
-  <app-card *ngIf="piles.drawDown > 0" (click)="clickDrawDeck()"></app-card>
+<div *ngIf="everythingExists()" class="gameRow">
+  <app-card *ngIf="HiddenDrawPile > 0" (click)="clickDrawDeck()"></app-card>
   <app-card
-    *ngIf="piles.drawDown == 0"
+    *ngIf="HiddenDrawPile == 0"
     [unknownState]="'blank'"
     (click)="clickDrawDeck()"
   ></app-card>
   <app-pile
-    *ngIf="piles.drawUp.length > 0"
-    [cards]="piles.drawUp.slice(-3)"
+    *ngIf="DrawPile.length > 0"
+    [cards]="DrawPile.slice(-3)"
     (SelectKnown)="playDrawPile()"
   ></app-pile>
-  <div *ngIf="!piles.drawUp.length"></div>
+  <div *ngIf="!DrawPile.length"></div>
   <div></div>
   <app-card
-    *ngFor="let i of winNums"
-    [card]="getWinPileTop(i)"
+    *ngFor="let pile of WinPiles; index as i"
+    [card]="pile.slice(-1)[0]"
     [unknownState]="'blank'"
     (click)="playWinPile(i)"
   ></app-card>
 </div>
 
-<div *ngIf="piles" class="gameRow">
+<div *ngIf="everythingExists()" class="gameRow">
   <app-pile
-    *ngFor="let i of playNums"
-    [unknowns]="getLength(i)"
-    [cards]="getPile(i)"
+    *ngFor="let pile of PlayPiles; index as i"
+    [unknowns]="HiddenPlayPiles[i]"
+    [cards]="pile"
     (SelectKnown)="catchSelection($event, i)"
     (SelectUnknown)="flipUnknown(i)"
     (SelectEmpty)="selectEmpty(i)"
