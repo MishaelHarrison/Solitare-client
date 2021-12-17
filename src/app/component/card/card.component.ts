@@ -7,8 +7,9 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Card, CardDefaults } from 'src/app/models/Card';
+import { Card } from 'src/app/models/Card';
 import { EventEmitter } from '@angular/core';
+import { CardTemplatesService } from 'src/app/service/card-templates.service';
 
 @Component({
   selector: 'app-card',
@@ -20,14 +21,14 @@ export class CardComponent implements OnInit, OnChanges {
   @Input() card: Card | null = null;
   @Input() unknownState: 'reverseSide' | 'blank' = 'reverseSide';
 
-  constructor() {}
+  constructor(private cardDefaults: CardTemplatesService) {}
 
   ngOnChanges(_changes: SimpleChanges): void {
-    this.CardDefault();
+    this.retrieveTemplate();
   }
 
   ngOnInit(): void {
-    this.CardDefault();
+    this.retrieveTemplate();
   }
 
   @HostListener('click', ['$event.target'])
@@ -35,11 +36,11 @@ export class CardComponent implements OnInit, OnChanges {
     this.makeSelection.emit({ depth: this.card?.depth });
   }
 
-  private CardDefault(): void {
+  private retrieveTemplate(): void {
     this.card =
       this.card ||
       (this.unknownState == 'reverseSide'
-        ? CardDefaults.reverseCard()
-        : CardDefaults.blankCard());
+        ? this.cardDefaults.reverseCard()
+        : this.cardDefaults.blankCard());
   }
 }

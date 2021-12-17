@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Board } from 'src/app/models/Board';
 import { Card } from 'src/app/models/Card';
-import { PileNames } from 'src/app/models/PileNames';
 import { BoardManagerService } from 'src/app/service/board-retreiver.service';
+import { PileFormatingContextService } from 'src/app/service/pile-formating-context.service';
 
 @Component({
   selector: 'app-board',
@@ -21,7 +21,10 @@ export class BoardComponent implements OnInit, Board {
   private pileSelection: string | null = null;
   private depthSelection: number | null = null;
 
-  constructor(private service: BoardManagerService) {}
+  constructor(
+    private service: BoardManagerService,
+    private PileNames: PileFormatingContextService
+  ) {}
 
   ngOnInit(): void {
     this.service.createBoard(this.id).subscribe((x) => {
@@ -68,12 +71,12 @@ export class BoardComponent implements OnInit, Board {
 
   catchSelection(event: { depth: number }, pileNum: number) {
     if (this.pileSelection == null || this.depthSelection == null) {
-      this.pileSelection = PileNames.PlayPile(pileNum);
+      this.pileSelection = this.PileNames.PlayPile(pileNum);
       this.depthSelection = event.depth;
     } else {
       this.move(
         this.pileSelection,
-        PileNames.PlayPile(pileNum),
+        this.PileNames.PlayPile(pileNum),
         this.depthSelection
       );
     }
@@ -81,35 +84,35 @@ export class BoardComponent implements OnInit, Board {
 
   playWinPile(pileNum: number) {
     if (this.pileSelection == null || this.depthSelection == null) {
-      this.pileSelection = PileNames.WinPile(pileNum);
+      this.pileSelection = this.PileNames.WinPile(pileNum);
       this.depthSelection = 1;
     } else {
       this.move(
         this.pileSelection,
-        PileNames.WinPile(pileNum),
+        this.PileNames.WinPile(pileNum),
         this.depthSelection
       );
     }
   }
 
   playDrawPile() {
-    this.pileSelection = PileNames.DrawPile;
+    this.pileSelection = this.PileNames.DrawPile;
     this.depthSelection = 1;
   }
 
   flipUnknown(pileNum: number) {
     this.move(
-      PileNames.HiddenPlayPile(pileNum),
-      PileNames.PlayPile(pileNum),
+      this.PileNames.HiddenPlayPile(pileNum),
+      this.PileNames.PlayPile(pileNum),
       1
     );
   }
 
   clickDrawDeck() {
     if (this.HiddenDrawPile > 0) {
-      this.move(PileNames.HiddenDrawPile, PileNames.DrawPile, 1);
+      this.move(this.PileNames.HiddenDrawPile, this.PileNames.DrawPile, 1);
     } else {
-      this.move(PileNames.DrawPile, PileNames.HiddenDrawPile, 1);
+      this.move(this.PileNames.DrawPile, this.PileNames.HiddenDrawPile, 1);
     }
   }
 
@@ -117,7 +120,7 @@ export class BoardComponent implements OnInit, Board {
     if (!(this.pileSelection == null || this.depthSelection == null)) {
       this.move(
         this.pileSelection,
-        PileNames.PlayPile(pileNum),
+        this.PileNames.PlayPile(pileNum),
         this.depthSelection
       );
     }
