@@ -7,7 +7,7 @@ import { EventEmitter } from '@angular/core';
   templateUrl: './pile.component.html',
   styleUrls: ['./pile.component.css'],
 })
-export class PileComponent implements OnInit {
+export class PileComponent {
   @Output() SelectKnown: EventEmitter<any> = new EventEmitter();
   @Output() SelectUnknown: EventEmitter<any> = new EventEmitter();
   @Output() SelectEmpty: EventEmitter<any> = new EventEmitter();
@@ -16,8 +16,6 @@ export class PileComponent implements OnInit {
   @Input() cards: Card[] = [];
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   catchSelection(event: any) {
     this.SelectKnown.emit(event);
